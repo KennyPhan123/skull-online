@@ -1,0 +1,236 @@
+Here is the text extracted from the rulebook images:
+
+Page 1
+
+SKULL
+The origins of the game
+
+Excerpt from the journal of Joseph, the author’s adventuring great-grandfather:
+
+“August 12th, 1921: we’ve finally reached the port of San-Francisco, the last leg of our trip around the world, our souls enriched by the encounters we’ve had and our hold filled with the wonderful gifts offered by the people who have welcomed us.
+
+Among these relics is a surprising collection of flowers with a heady perfume, accompanied by beautifully decorated skulls, used for the worship of ancestors.
+
+During our travels, their fascinating presence has opened my mind, which is sometimes overly rational, to the rules of a captivating traditional game: “The game of skulls”.
+A surprising mix of bluff and strategy in which it is said that: “whoever disturbs the rest of the ancestors by revealing their skulls will immediately lose one of their lives...”
+Impelled by a mysterious force, I’ve immediately represented these skulls and flowers on a series of cardboard cards, then transcribed the rules.
+
+We’ve practiced the game quite a lot and have discovered with delight all of the subtleties which were required to become the winner.”
+
+From the port, the use of this game spread like wildfire among all the adventurers on the West Coast. A few years ago, the game was rediscovered by some biker gangs and renamed "Skull and Rose*"...
+
+As homage to the author’s adventurous ancestor, here’s a new edition, inspired by the strange beauty of the original game...
+
+* For the experts: the rules are identical to Skull & Roses.
+Happy reading to new players...
+
+Page 2
+
+Contents
+6 tribes are represented in the game.
+Each of them owns a collection of sacred objects composed of:
+
+3 flower-discs
+
+1 skull-disc
+
+1 card-playing mat assorted to each tribe.
+
+Setup
+Each player chooses the 4 discs and the play mat of a given tribe.
+Each player places their mat in front of them, Skull-side visible.
+The player takes their discs into their hand so that their faces remain hidden to the other players.
+A first player is chosen.
+
+Step 1 - Turn preparation
+Each player chooses one of their discs, and places it face-down on their mat.
+Once each player has placed their disc, play moves on to step 2.
+
+Object of the game
+Succeed at two challenges.
+
+To succeed at a challenge, you must flip the corresponding number of discs without revealing a Skull.
+The 4 discs with which you play will also be the 4 “lives” you have available to try and win.
+
+Page 3
+
+Step 2 - ADDING extra discs or CHALLENGE
+
+ADDING
+If they so want, the first player can add an extra disc, on top of the one which has already been played.
+The player to their left can then do the same, and so on, proceeding clockwise. This can continue around the table multiple times.
+
+The first players play their first disc after the other players: this way they can analyze the behavior of their opponents.
+Players add, face-down, only one disc at a time.
+The discs are placed slightly offset to clearly show how many have been played.
+
+Instead of adding a disc, the first player can immediately issue a challenge.
+On their turn, if a player no longer has any discs in hand, that player must issue a challenge.
+A player may not issue a challenge of zero discs, or a challenge higher than the total number of discs placed by the players.
+
+CHALLENGE
+If a player cannot or does not want to play an additional disc, the player issues a challenge. They then announce the number of discs they intend to reveal from among all those played on mats.
+Then, proceeding clockwise, each player must:
+Increase the Bid on the previous challenge by announcing a greater number.
+Or pass by calling “I pass” and sliding their mat towards the center of the table.
+In that case, the player will no longer be able to take part in that bid.
+
+Play proceeds that way until all players pass, save one: the player who bid the highest, called the Challenger.
+A challenge concerns all discs played on all mats, including those of players who have passed.
+Play then proceeds to step 3.
+
+Bidding or overbidding of more than one disc is allowed.
+It’s even possible to directly bid the maximum number of discs present on the mats.
+
+Page 4
+
+Step 3 - The attempt
+The Challenger must flip a number of discs equal to their challenge while respecting the following rules:
+
+The player begins by flipping all of THEIR own discs.
+
+They continue to flip discs with those of the other players, and in the order they choose.
+
+Be Careful:
+
+The discs are flipped one by one.
+
+The first disc to be flipped is the top one on a mat, before eventually flipping, in order, the remaining discs.
+
+A player doesn't have to flip over all of an opponent's discs.
+
+If the challenge is equal to total number of discs played, flip all the discs one by one and stop when the first Skull is flipped.
+
+ONE SKULL flipped:
+the Challenger has failed.
+NO SKULLS flipped:
+the Challenger has SUCCEEDED.
+
+If the Challenger has played more discs than the amount of the challenge, they’ll flip from the top of their stack the number of discs necessary for the completion of their attempt.
+
+Failed attempt
+They immediately stop their attempt, and:
+
+All players return all their discs to their hand.
+
+The Challenger loses a disc for good:
+
+they shuffle and place face-down on the table all of their remaining discs. The player whose Skull the Challenger flipped chooses the disc to eliminate. That disc is removed from the game without being revealed. Only the Challenger will know if they’ve lost their Skull or a flower-disc.
+
+if the Challenger has flipped their own Skull, that player is the one who secretly chooses the disc they will lose.
+
+If the Challenger loses their last disc, that player is eliminated and returns their mat.
+If the Challenger is eliminated, the first player of the following turn will be the player whose Skull the Challenger has flipped. If the Challenger has flipped their own Skull, the Challenger chooses the first player of the following turn.
+
+If they reveal a Skull, the Challenger may not flip their remaining discs in order to reveal the strategy of their opponents. An opponent can, however, if they wish to do so, flip their own discs in order to see the eventual downtrodden look on the Challenger's face!
+
+Page 5
+
+Successful attempt
+The Challenger has thus flipped over the number of discs announced by revealing only flower-discs.
+They’ve won their challenge and should flip their mat flower-side up.
+If their mat was already flower-side up, they’ve won the game.
+
+Special case:
+A player has lost 3 of their 4 discs, they thus only have one disc left.
+They’ve placed that disc in the turn preparation step, it’s now their turn to play.
+Depending on the step:
+
+Adding discs: they must call a challenge.
+
+Bidding: they can pass or increase their bid.
+
+Challenge: if their disc is revealed and is a Skull, that player is eliminated from the game.
+
+Designs of the mats on skulls sides:
+[Visuals of mats]
+
+Designs of the mats on flowers sides:
+[Visuals of mats]
+
+New round
+Whether they’ve succeeded or failed, the Challenger is the first player of the following round, which resumes on step 1.
+
+VICTORY
+As soon as a player wins a second challenge,
+or
+As soon as they wind up to be the only player who isn't eliminated, that player WINS THE GAME.
+
+The first player of a round is always the challenger of the previous round, unless they've been eliminated from the game in the attempt. (See page 12).
+
+Page 6
+
+GAME EXAMPLE - for 4 players, which can be
+
+1
+Each player has played one face-down disc on their mat.
+
+2
+
+Adding discs:
+The 1st player plays a second disc, as do the 2nd and 3rd players.
+then
+
+Challenge:
+The 4th player doesn't add a disc, but instead issues a challenge, and announces “3”. Meaning the player intends to flip over 3 discs.
+
+Bidding
+The challenge was set at “3”,
+The following player increases the bid, and says “5”.
+
+Pass
+The following 2 players pass.
+The player who had issued the challenge at “3” also passes.
+The player who said “5” remains the highest bidder.
+That player becomes the Challenger and must attempt to complete their challenge.
+
+Page 7
+
+amended for a different number of players.
+
+3 - The attempt
+
+Discs 1 and 2: The Challenger first flips all of their discs: 2 flower-discs. They can continue.
+Then, they flip, one by one (in the order of their choice), the discs of the other players.
+
+Disc 3: the top disc on this mat is a flower-disc, everything is fine!
+
+Disc 4: this player's only disc is flipped, it's a flower-disc, perfect!
+
+Disc 5: the top disc on this mat is a flower-disc! Excellent!
+
+The Challenger hasn't flipped a Skull, and thus wins their challenge.
+
+4 - New round
+Everybody picks their discs back up.
+The Challenger flips their mat to its Flower side.
+They become the first player for the next round.
+If, on a later turn, they are the first to win a second challenge, they win the game.
+
+Page 8
+
+Game tips
+
+It's very advantageous to be the first player. It's worth taking risks to have that place, even if you may lose a disc. Don't hesitate to bluff by starting a challenge or upping the ante despite having played a Skull, it's the best way to lull the future Challenger into a false sense of safety so that they'll lose by flipping over your Skull.
+
+Be careful, at the end of the game, when the players have few discs left, there are some winning strategies!
+Discover them and you'll have a considerable advantage in the middle of the game.
+To destabilize your opponents, comment your actions and that of other players, especially those of the Challenger. For example, by saying "There, I'm warning you, I'm playing a Skull!", or "Nooo – don't flip one of his discs, he played a skull!"
+
+To win, you must beat your opponents from a psychological standpoint.
+We advise that new players avoid 3-player games – playing with that number of players is highly tactical and is very unforgiving.
+
+A variant for experienced players:
+You can combine 2 boxes of Skull to play with more than 6 players, but the best games remain under 10 players.
+
+A variant: 2 Tribes per Player
+At the beginning of the game, each player chooses 2 tribes. As in the basic game, as soon as a player wins a second time with only one of their tribes, that player IS THE GAME'S WINNER.
+To set up the game, the two tribes of a given player will be placed facing one another on both sides of the game table.
+
+Welcome on: www.the-skull.com
+
+Skull is a game by Hervé Marly, with artwork by Thomas Vuarchex.
+Game line directed by Philippe des Pallières, layout by Caroline Ottavis.
+Translated by Eric Harlaux, revision by Eric Franklin.
+A heartfelt thanks to our worthy and NUMEROUS testers and a special thanks to Bruno Faidutti.
+Skull © 2013 / éditions « lui-même ».

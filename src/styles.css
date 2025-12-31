@@ -1,0 +1,845 @@
+/* ============================================
+   Skull Board Game - Official Assets Theme
+   NO GRADIENTS, NO EMOJIS - Using original game artwork
+   ============================================ */
+
+:root {
+    /* Background */
+    --bg-primary: #F5F0E8;
+    --bg-secondary: #EDE8DC;
+    --bg-table: #1a2634;
+
+    /* UI Colors */
+    --text-primary: #2C3E50;
+    --text-secondary: #7F8C8D;
+    --text-light: #ECF0F1;
+    --card-shadow: rgba(0, 0, 0, 0.3);
+
+    /* Functional Colors */
+    --success: #A8E6CF;
+    --danger: #FF8B94;
+    --warning: #FFE5B4;
+
+    /* Sizing - Disc is 83% of mat size */
+    --mat-size: 200px;
+    --disc-size: 166px;
+    /* 83% of 200px */
+    --disc-small: 166px;
+    /* For stacked discs on mat - 83% of mat size */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-primary);
+    min-height: 100vh;
+    color: var(--text-primary);
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Prevent right-click save on all game images */
+img {
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-drag: none;
+}
+
+/* ============================================
+   Screens
+   ============================================ */
+.screen {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* ============================================
+   Lobby Screen
+   ============================================ */
+#lobby {
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-secondary);
+}
+
+.lobby-container {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.game-title {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: 8px;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+}
+
+/* Buttons */
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-large {
+    padding: 18px 28px;
+    font-size: 1.1rem;
+}
+
+.btn-primary {
+    background: #C9B1FF;
+    color: var(--text-primary);
+    box-shadow: 0 4px 12px rgba(201, 177, 255, 0.4);
+}
+
+.btn-secondary {
+    background: #B5EAD7;
+    color: var(--text-primary);
+    box-shadow: 0 4px 12px rgba(181, 234, 215, 0.4);
+}
+
+/* Form Styles */
+.form-card {
+    background: var(--bg-primary);
+    padding: 24px;
+    border-radius: 12px;
+}
+
+.form-card h3 {
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.input-group {
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #E0E0E0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    background: white;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #C9B1FF;
+}
+
+.code-input {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1.5rem !important;
+    letter-spacing: 8px;
+    font-weight: 700;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    margin-top: 16px;
+    font-size: 0.9rem;
+    padding: 8px;
+}
+
+.btn-link:hover {
+    color: var(--text-primary);
+}
+
+/* Room Info */
+.room-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.code-display {
+    background: #C9B1FF;
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.code-label {
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    opacity: 0.8;
+}
+
+.room-code-box {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: 10px;
+}
+
+.btn-copy {
+    margin-top: 12px;
+    background: white;
+    color: var(--text-primary);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.players-section {
+    margin: 16px 0;
+}
+
+.player-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 12px 0;
+}
+
+.player-tag {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    background: #B5EAD7;
+}
+
+.player-tag.host {
+    font-weight: 700;
+    background: #C9B1FF;
+}
+
+.waiting-text {
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-top: 12px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ============================================
+   Game Table
+   ============================================ */
+.game-table {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background: var(--bg-table);
+    overflow: visible;
+}
+
+/* ============================================
+   Players Container
+   ============================================ */
+.players-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* ============================================
+   Player Mat
+   ============================================ */
+.player-mat {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+}
+
+.mat-container {
+    position: relative;
+    width: var(--mat-size);
+    height: var(--mat-size);
+    overflow: visible;
+    will-change: contents;
+    backface-visibility: hidden;
+}
+
+.mat-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4));
+    transition: transform 0.3s;
+    border-radius: 12px;
+}
+
+.player-mat.active-turn .mat-image {
+    box-shadow: 0 0 20px 8px rgba(255, 255, 255, 0.8);
+    outline: 3px solid white;
+    outline-offset: 2px;
+}
+
+/* Disc stack on mat - centered and slightly smaller than mat */
+.disc-stack-on-mat {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Stacked discs (offset for visibility) - horizontal stacking */
+.stacked-disc {
+    width: var(--disc-small);
+    height: var(--disc-small);
+    border-radius: 50%;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    /* Stack with 85% overlap - show just a sliver of each disc */
+    margin-left: calc(var(--disc-small) * -0.85);
+}
+
+.stacked-disc:first-child {
+    margin-left: 0;
+}
+
+.stacked-disc img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Clickable disc during revelation */
+.stacked-disc.clickable {
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+    pointer-events: auto;
+}
+
+.stacked-disc.clickable:hover {
+    transform: scale(1.15);
+}
+
+/* Revealed discs - stay in place but fully visible (no overlap) */
+.stacked-disc.revealed {
+    margin-left: 5px;
+    opacity: 1;
+    z-index: 100;
+}
+
+/* Player name tag */
+.player-name-tag {
+    background: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.player-name-tag.current {
+    background: var(--warning);
+}
+
+.player-name-tag.eliminated {
+    background: var(--danger);
+    text-decoration: line-through;
+}
+
+/* ============================================
+   Player Hand - Centered on Mat
+   ============================================ */
+.player-hand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: -20px;
+    z-index: 9999;
+}
+
+.hand-disc {
+    width: var(--disc-small);
+    height: var(--disc-small);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s, margin-bottom 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    margin-left: calc(var(--disc-small) * -0.2);
+    pointer-events: auto;
+}
+
+.hand-disc:first-child {
+    margin-left: 0;
+}
+
+.hand-disc:hover {
+    transform: scale(1.1);
+    margin-bottom: 20px;
+    z-index: 10;
+}
+
+.hand-disc.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.hand-disc.disabled:hover {
+    transform: none;
+    margin-bottom: 0;
+}
+
+.hand-disc img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* ============================================
+   Center Area
+   ============================================ */
+.center-area {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    pointer-events: none;
+    /* Allow clicking through to mats/discs */
+}
+
+.center-area>* {
+    pointer-events: auto;
+    /* Allow interaction with status box if needed */
+}
+
+.game-status {
+    background: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    margin-bottom: 12px;
+}
+
+.bid-info {
+    background: transparent;
+    padding: 0;
+    font-weight: 600;
+    font-size: 1rem;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.bid-value {
+    font-size: 1rem;
+    margin-left: 4px;
+}
+
+/* Revelation mode - just the number, no box */
+.bid-info.revelation-mode {
+    background: transparent;
+    padding: 0;
+}
+
+.bid-info.revelation-mode .bid-value {
+    font-size: 1.2rem;
+    margin-left: 0;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================
+   Action Panel - Centered on Screen
+   ============================================ */
+.action-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    text-align: center;
+}
+
+.action-label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.popup-bid {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.action-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.action-group.hidden {
+    display: none !important;
+}
+
+/* Placement actions */
+.placement-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+.btn-add-disc {
+    background: #B5EAD7;
+    color: var(--text-primary);
+}
+
+.btn-challenge {
+    background: var(--warning);
+    color: var(--text-primary);
+}
+
+/* Bidding controls */
+.bid-controls {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-raise {
+    background: #A3C4F3;
+    color: var(--text-primary);
+}
+
+.btn-pass {
+    background: var(--text-secondary);
+    color: white;
+}
+
+.bid-stepper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.stepper-btn {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: #C9B1FF;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.stepper-btn:hover {
+    transform: scale(1.1);
+    background: #b89dff;
+}
+
+.stepper-btn:active {
+    transform: scale(0.95);
+}
+
+.stepper-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.stepper-value {
+    min-width: 50px;
+    padding: 8px 16px;
+    background: white;
+    border: 2px solid #C9B1FF;
+    border-radius: 8px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--text-primary);
+}
+
+/* Reveal progress */
+.reveal-progress {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Card loss selection */
+.loss-selection {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.loss-disc {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid var(--danger);
+    cursor: pointer;
+    transition: transform 0.2s;
+    overflow: hidden;
+    padding: 0;
+    background: transparent;
+}
+
+.loss-disc:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 12px var(--danger);
+}
+
+.loss-disc img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Player selection (for choosing first player after elimination) */
+.player-selection {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.player-select-btn {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 2px solid #C9B1FF;
+    background: #C9B1FF;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.player-select-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(201, 177, 255, 0.5);
+}
+
+/* ============================================
+   Modals
+   ============================================ */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 350px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.modal-content p {
+    margin-bottom: 24px;
+    color: var(--text-secondary);
+}
+
+/* Error modal specific styling */
+.modal-content.error-modal {
+    border-left: 5px solid var(--danger);
+}
+
+.modal-content.error-modal h2 {
+    color: var(--danger);
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 768px) {
+    :root {
+        --mat-size: 140px;
+        --disc-size: 116px;
+        --disc-small: 116px;
+        /* 83% of 140px = 116.2px */
+    }
+
+    .lobby-container {
+        padding: 24px;
+    }
+
+    .game-title {
+        font-size: 2rem;
+        letter-spacing: 4px;
+    }
+
+    .action-panel {
+        padding: 16px 20px;
+        bottom: 10px;
+    }
+
+    .hand-disc {
+        width: var(--disc-small);
+        height: var(--disc-small);
+        margin-left: calc(var(--disc-small) * -0.2);
+    }
+
+    .player-name-tag {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+    }
+
+}
+
+@media (max-width: 480px) {
+    :root {
+        --mat-size: 100px;
+        --disc-size: 83px;
+        --disc-small: 83px;
+        /* 83% of 100px */
+    }
+
+    .hand-disc {
+        width: var(--disc-small);
+        height: var(--disc-small);
+        margin-left: calc(var(--disc-small) * -0.2);
+    }
+
+    /* Action panel responsive - just smaller padding */
+    .action-panel {
+        padding: 12px 16px;
+    }
+
+    .game-status {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+
+    .bid-stepper {
+        gap: 6px;
+    }
+
+    .stepper-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1.3rem;
+    }
+
+    .stepper-value {
+        min-width: 40px;
+        padding: 6px 12px;
+        font-size: 1.2rem;
+    }
+
+}

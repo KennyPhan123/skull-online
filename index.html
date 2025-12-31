@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Skull - Online Board Game</title>
+    <meta name="description"
+        content="Play Skull board game online with friends. A game of bluffing with skulls and roses.">
+    <link rel="stylesheet" href="/src/styles.css">
+</head>
+
+<body>
+    <!-- Lobby Screen -->
+    <div id="lobby" class="screen active">
+        <div class="lobby-container">
+            <h1 class="game-title">SKULL</h1>
+            <p class="subtitle">A game of bluffing - 3 to 6 players</p>
+
+            <!-- Main Menu -->
+            <div id="mainMenu" class="lobby-section">
+                <div class="menu-buttons">
+                    <button id="showCreate" class="btn btn-primary btn-large">Create Game</button>
+                    <button id="showJoin" class="btn btn-secondary btn-large">Join Game</button>
+                </div>
+            </div>
+
+            <!-- Create Game Form -->
+            <div id="createForm" class="lobby-section hidden">
+                <div class="form-card">
+                    <h3>Create New Game</h3>
+                    <div class="input-group">
+                        <label for="createName">Your Name</label>
+                        <input type="text" id="createName" placeholder="Enter your name" maxlength="12"
+                            autocomplete="off">
+                    </div>
+                    <button id="createRoom" class="btn btn-primary">Create Room</button>
+                    <button class="btn-link" id="backFromCreate">Back to menu</button>
+                </div>
+            </div>
+
+            <!-- Join Game Form -->
+            <div id="joinForm" class="lobby-section hidden">
+                <div class="form-card">
+                    <h3>Join Existing Game</h3>
+                    <div class="input-group">
+                        <label for="joinName">Your Name</label>
+                        <input type="text" id="joinName" placeholder="Enter your name" maxlength="12"
+                            autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <label for="roomCode">Room Code (4 letters)</label>
+                        <input type="text" id="roomCode" placeholder="ABCD" maxlength="4" autocomplete="off"
+                            class="code-input">
+                    </div>
+                    <button id="joinRoom" class="btn btn-secondary">Join Room</button>
+                    <button class="btn-link" id="backFromJoin">Back to menu</button>
+                </div>
+            </div>
+
+            <!-- Room Info (after create/join) -->
+            <div id="roomInfo" class="room-info hidden">
+                <div class="code-display">
+                    <p class="code-label">Room Code</p>
+                    <div id="displayRoomCode" class="room-code-box"></div>
+                    <button id="copyCodeBtn" class="btn-copy">Tap to Copy</button>
+                </div>
+                <div class="players-section">
+                    <p>Players: <span id="playerCount">0</span>/6</p>
+                    <div id="playerList" class="player-list"></div>
+                </div>
+                <button id="startGame" class="btn btn-primary hidden">Start Game</button>
+                <p class="waiting-text">Waiting for host to start...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game" class="screen">
+        <div id="gameTable" class="game-table">
+            <!-- Player mats will be added dynamically -->
+            <div id="playersContainer" class="players-container"></div>
+
+            <!-- Center area for game info -->
+            <div id="centerArea" class="center-area">
+                <div id="gameStatus" class="game-status"></div>
+                <div id="bidInfo" class="bid-info hidden">
+                    <span id="bidLabel" class="bid-label">Current Bid:</span>
+                    <span id="currentBid" class="bid-value">0</span>
+                </div>
+            </div>
+
+            <!-- Action panel -->
+            <div id="actionPanel" class="action-panel hidden">
+                <!-- Placement phase actions (after initial placement) -->
+                <div id="placementActions" class="action-group hidden">
+                    <p class="action-label">Your turn:</p>
+                    <div class="placement-buttons">
+                        <button id="addDiscBtn" class="btn btn-add-disc">Add Disc</button>
+                        <button id="showChallengeBtn" class="btn btn-challenge">Challenge!</button>
+                    </div>
+                    <div id="challengeSelector" class="bid-stepper hidden">
+                        <span>Your bid:</span>
+                        <button id="challengeBidDecrease" class="stepper-btn">−</button>
+                        <span id="challengeBidAmount" class="stepper-value">1</span>
+                        <button id="challengeBidIncrease" class="stepper-btn">+</button>
+                        <button id="confirmChallenge" class="btn btn-primary">Confirm</button>
+                    </div>
+                </div>
+
+                <!-- Bidding phase actions -->
+                <div id="biddingActions" class="action-group hidden">
+                    <p class="action-label">Current bid: <span id="popupBidDisplay" class="popup-bid">0</span></p>
+                    <div class="bid-controls">
+                        <button id="raiseBid" class="btn btn-raise">Raise</button>
+                        <button id="passBid" class="btn btn-pass">Pass</button>
+                    </div>
+                    <div id="bidSelector" class="bid-stepper hidden">
+                        <button id="bidDecrease" class="stepper-btn">−</button>
+                        <span id="bidAmount" class="stepper-value">1</span>
+                        <button id="bidIncrease" class="stepper-btn">+</button>
+                        <button id="confirmBid" class="btn btn-primary">Confirm</button>
+                    </div>
+                </div>
+
+                <!-- Revelation phase actions -->
+                <div id="revelationActions" class="action-group hidden">
+                    <p class="action-label">Flip discs to reach your bid!</p>
+                    <p id="revealProgress" class="reveal-progress">0 / 0</p>
+                </div>
+
+                <!-- Card loss selection -->
+                <div id="cardLossActions" class="action-group hidden">
+                    <p class="action-label">Select a disc to lose:</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Modal -->
+        <div id="gameOverModal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Game Over!</h2>
+                <p id="gameOverMessage"></p>
+                <button id="playAgain" class="btn btn-primary">Play Again</button>
+            </div>
+        </div>
+
+        <!-- Round Result Modal -->
+        <div id="roundResultModal" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="roundResultTitle"></h2>
+                <p id="roundResultMessage"></p>
+                <button id="continueGame" class="btn btn-primary">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal (global - works on all screens) -->
+    <div id="errorModal" class="modal hidden">
+        <div class="modal-content error-modal">
+            <h2>⚠️ Error</h2>
+            <p id="errorMessage"></p>
+            <button id="errorOk" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

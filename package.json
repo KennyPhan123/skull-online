@@ -1,0 +1,18 @@
+{
+    "name": "skull-game",
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "dev:party": "partykit dev",
+        "dev:all": "start cmd /c \"npm run dev:party\" && npm run dev",
+        "build": "vite build"
+    },
+    "dependencies": {
+        "partysocket": "^1.0.1"
+    },
+    "devDependencies": {
+        "partykit": "^0.0.115",
+        "vite": "^5.4.11"
+    }
+}

@@ -843,6 +843,7 @@ img {
     }
 
 }
+
 /* ============================================
    Personal History
    ============================================ */
@@ -853,7 +854,7 @@ img {
     background: white;
     padding: 12px 16px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 90;
     max-width: 250px;
 }
@@ -883,7 +884,8 @@ img {
 }
 
 .history-type.flower {
-    color: #2ECC71; /* Green */
+    color: #2ECC71;
+    /* Green */
 }
 
 .history-arrow {
@@ -894,7 +896,8 @@ img {
 @media (max-width: 768px) {
     .personal-history {
         bottom: auto;
-        top: 60px; /* Below name? */
+        top: 60px;
+        /* Below name? */
         left: 10px;
         padding: 8px 12px;
         font-size: 0.8rem;
@@ -905,14 +908,18 @@ img {
 /* Turn Timer */
 .turn-timer {
     position: fixed;
-    bottom: 110px; /* Above personal history (approx 20px + 70px height + 20px gap) */
+    bottom: 110px;
+    /* Above personal history (approx 20px + 70px height + 20px gap) */
     left: 20px;
     background: white;
     padding: 12px 16px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 90;
-    min-width: 80px; /* Ensure it's not too skinny */
+    width: fit-content;
+    /* Ensure it wraps content */
+    min-width: 80px;
+    max-width: 250px;
     border: 2px solid transparent;
 }
 
@@ -944,12 +951,13 @@ img {
 @media (max-width: 768px) {
     .turn-timer {
         bottom: auto;
-        top: 130px; /* Below personal history which is at top: 60px */
+        top: 130px;
+        /* Below personal history which is at top: 60px */
         left: 10px;
         padding: 8px 12px;
         min-width: auto;
     }
-    
+
     .turn-timer #timerValue {
         font-size: 1.2rem;
     }

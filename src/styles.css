@@ -912,8 +912,16 @@ img {
     right: 20px;
     bottom: 20px;
     left: auto;
-    width: auto;
-    min-width: 90px;
+    top: auto;
+    /* Prevent vertical stretch */
+    height: auto;
+    width: fit-content;
+    max-width: 120px;
+    /* Constrain max width */
+    min-width: 80px;
+
+    align-items: flex-end;
+    /* Align content to right edge inside box */
 }
 
 .turn-timer .timer-label {
@@ -923,6 +931,8 @@ img {
     margin-bottom: 2px;
     font-weight: 600;
     white-space: nowrap;
+    text-align: right;
+    /* Text aligns right */
 }
 
 .turn-timer #timerValue {

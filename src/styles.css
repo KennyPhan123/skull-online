@@ -845,18 +845,37 @@ img {
 }
 
 /* ============================================
-   Personal History
+   Player HUD (Timer & History)
    ============================================ */
-.personal-history {
+.player-hud {
     position: fixed;
     bottom: 20px;
     left: 20px;
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    max-width: 250px;
+    pointer-events: none;
+    /* Let clicks pass through empty space */
+}
+
+/* Common box style for HUD items */
+.player-hud>div {
     background: white;
-    padding: 12px 16px;
+    padding: 10px 15px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 90;
-    max-width: 250px;
+    pointer-events: auto;
+    /* Re-enable clicks on boxes */
+    border: 2px solid transparent;
+}
+
+/* Personal History Specifics */
+.personal-history {
+    /* No positioning needed, handled by HUD */
+    width: 100%;
 }
 
 .history-label {
@@ -885,7 +904,6 @@ img {
 
 .history-type.flower {
     color: #2ECC71;
-    /* Green */
 }
 
 .history-arrow {
@@ -893,46 +911,13 @@ img {
     color: var(--text-secondary);
 }
 
-@media (max-width: 768px) {
-    .personal-history {
-        bottom: auto;
-        top: 60px;
-        /* Below name? */
-        left: 10px;
-        padding: 8px 12px;
-        font-size: 0.8rem;
-    }
-}
 
-
-/* Turn Timer */
+/* Turn Timer Specifics */
 .turn-timer {
-    position: fixed;
-    bottom: 110px;
-    left: 20px;
-    width: auto;
-    height: auto;
-
-    background: white;
-    padding: 10px 15px;
-    border-radius: 12px;
-
-    /* Layout */
+    /* No positioning needed, handled by HUD */
+    min-width: 90px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    /* Align text to left */
-    justify-content: center;
-
-    /* Dimensions */
-    min-width: 90px;
-    max-width: 150px;
-
-    /* Visuals */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 9999;
-    /* Ensure top */
-    border: 2px solid transparent;
 }
 
 /* Re-use history label style if possible, or define similar */
@@ -963,21 +948,6 @@ img {
     color: var(--danger);
 }
 
-@media (max-width: 768px) {
-    .turn-timer {
-        bottom: auto;
-        top: 130px;
-        /* Below personal history which is at top: 60px */
-        left: 10px;
-        padding: 8px 12px;
-        min-width: auto;
-    }
-
-    .turn-timer #timerValue {
-        font-size: 1.2rem;
-    }
-}
-
 @keyframes pulse {
     0% {
         transform: scale(1);
@@ -992,5 +962,23 @@ img {
     100% {
         transform: scale(1);
         box-shadow: 0 0 0 0 rgba(255, 139, 148, 0);
+    }
+}
+
+@media (max-width: 768px) {
+    .player-hud {
+        bottom: auto;
+        top: 60px;
+        /* Below name */
+        left: 10px;
+        gap: 8px;
+    }
+
+    .player-hud>div {
+        padding: 8px 12px;
+    }
+
+    .turn-timer #timerValue {
+        font-size: 1.2rem;
     }
 }

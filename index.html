@@ -197,16 +197,19 @@
             </div>
         </div>
 
-        <!-- Personal History (Moved to root) -->
-        <div id="personalHistory" class="personal-history hidden">
-            <span class="history-label">Your Stack:</span>
-            <div id="historyList" class="history-list"></div>
-        </div>
+        <!-- Player HUD (Bottom Left) -->
+        <div id="playerHud" class="player-hud">
+            <!-- Turn Timer -->
+            <div id="turnTimer" class="turn-timer hidden">
+                <span class="timer-label">Timer:</span>
+                <span id="timerValue">--</span>
+            </div>
 
-        <!-- Turn Timer (Moved to root) -->
-        <div id="turnTimer" class="turn-timer hidden">
-            <span class="timer-label">Timer:</span>
-            <span id="timerValue">--</span>
+            <!-- Personal History -->
+            <div id="personalHistory" class="personal-history hidden">
+                <span class="history-label">Your Stack:</span>
+                <div id="historyList" class="history-list"></div>
+            </div>
         </div>
 
         <!-- Game Over Modal (Moved to root) -->

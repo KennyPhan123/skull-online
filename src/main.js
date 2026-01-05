@@ -380,6 +380,45 @@ function handleServerMessage(data) {
             state.gameState.currentTurnId = data.currentTurnId;
             state.gameState.phase = data.phase;
             state.gameState.placementRound = data.placementRound;
+
+            // Update personal history if I placed a card (even if auto-placed)
+            if (data.playerId === state.playerId) {
+                // Find what card was placed by checking hand difference or just trusting server
+                // Since server doesn't send the card type in broadcast for security (to others),
+                // we have to infer it or have server send it specifically to us.
+                // The server DOES send 'myHand' and 'myStack' in personalized broadcast.
+                // But data.players has everyone. 
+
+                // Better approach: Server sends personalized message. 
+                // Let's rely on the player's updated stack/hand from the state to infer,
+                // OR simpler: just don't update history here if we don't know the type.
+
+                // WAIT: The server broadcast for `cardPlaced` does NOT include the card type for obvious reasons.
+                // However, `broadcast` method injects `myHand` and `myStack` if `message.players` exists.
+                // So `data.myStack` should be available? No, `data` is the parsed message.
+                // If the server uses `broadcast()`, it sends `myHand`/`myStack` in the personalized message.
+
+                // Let's check server.js broadcast again. Yes, it injects `myHand` and `myStack`.
+                // So we can check the top of `myStack` to see what was placed.
+            }
+            // Actually, we need to know the TYPE to push to history. 
+            // If I placed it effectively, the last item in my stack is what I placed.
+
+            if (data.playerId === state.playerId && data.myStack) {
+                const newStack = data.myStack;
+                const oldStackLength = state.myPlacementHistory ? state.myPlacementHistory.length : 0;
+
+                // If stack grew, the last item is the new card
+                if (newStack.length > oldStackLength) {
+                    const lastCard = newStack[newStack.length - 1];
+                    // lastCard might be {type: '...', revealed: ...}
+                    state.myPlacementHistory.push(lastCard.type);
+                } else if (newStack.length === 0 && state.myPlacementHistory.length > 0) {
+                    // Stack reset (new round), history should have been cleared elsewhere or we clear it now?
+                    // New round clears history.
+                }
+            }
+
             renderGame();
             break;
 
@@ -685,8 +724,7 @@ function renderPlayerHand(forceShow = false) {
                 type: 'placeCard',
                 cardType: cardType
             }));
-            // Optimistically add to history
-            state.myPlacementHistory.push(cardType);
+            // History updated via server event
         });
 
         handContainer.appendChild(disc);

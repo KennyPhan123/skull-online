@@ -516,6 +516,7 @@ function syncGameState(serverState) {
     state.gameState.placementRound = serverState.placementRound;
     state.gameState.totalCardsOnTable = serverState.totalCardsOnTable;
     state.gameState.gameStarted = serverState.gameStarted;
+    state.gameState.turnDeadline = serverState.turnDeadline;
 }
 
 // === GAME ===
@@ -1113,4 +1114,45 @@ function renderPersonalHistory() {
             listContainer.appendChild(item);
         }
     });
+}
+
+function renderTurnTimer() {
+    // Clear existing interval to avoid duplicates
+    if (state.timerInterval) {
+        clearInterval(state.timerInterval);
+        state.timerInterval = null;
+    }
+
+    const deadLine = state.gameState.turnDeadline;
+    const container = elements.turnTimer;
+    const valueEl = elements.timerValue;
+
+    // If no deadline or game over/lobby, hide
+    if (!deadLine || !state.gameState.gameStarted || state.gameState.phase === 'GAME_OVER') {
+        container.classList.add('hidden');
+        return;
+    }
+
+    container.classList.remove('hidden');
+
+    function update() {
+        const now = Date.now();
+        const diff = Math.ceil((deadLine - now) / 1000);
+
+        if (diff <= 0) {
+            valueEl.textContent = '0';
+            container.classList.add('warning');
+        } else {
+            valueEl.textContent = diff;
+            if (diff <= 10) {
+                container.classList.add('warning');
+            } else {
+                container.classList.remove('warning');
+            }
+        }
+    }
+
+    // Initial update
+    update();
+    state.timerInterval = setInterval(update, 1000);
 }

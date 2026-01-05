@@ -613,6 +613,7 @@ function renderPlayers() {
         mat.dataset.playerId = player.id;
         mat.style.left = `${pos.x}px`;
         mat.style.top = `${pos.y}px`;
+        if (isMe) mat.style.zIndex = '80'; // Ensure local player is always on top (fixes hand overlap)
 
         // Mat image - show flower side if player has won at least once
         const matImageSrc = player.wins > 0 ? images.matFlower : images.matSkull;

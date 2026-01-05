@@ -916,11 +916,16 @@ img {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 90;
+    width: auto;
+    /* Fallback */
     width: fit-content;
-    /* Ensure it wraps content */
-    min-width: 80px;
+    height: auto;
+    min-width: 100px;
     max-width: 250px;
     border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* Re-use history label style if possible, or define similar */
@@ -960,5 +965,22 @@ img {
 
     .turn-timer #timerValue {
         font-size: 1.2rem;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 139, 148, 0.7);
+    }
+
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(255, 139, 148, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 139, 148, 0);
     }
 }

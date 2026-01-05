@@ -901,3 +901,48 @@ img {
     }
 }
 
+
+/* Turn Timer */
+.turn-timer {
+    position: fixed;
+    bottom: 100px; /* Above personal history */
+    left: 20px;
+    background: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    border: 2px solid transparent;
+}
+
+.turn-timer .timer-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.turn-timer #timerValue {
+    font-size: 1.2rem;
+    color: var(--primary);
+}
+
+.turn-timer.warning {
+    border-color: var(--danger);
+    animation: pulse 1s infinite;
+}
+
+.turn-timer.warning #timerValue {
+    color: var(--danger);
+}
+
+@media (max-width: 768px) {
+    .turn-timer {
+        bottom: auto;
+        top: 130px; /* Below personal history which is at top: 60px */
+        left: 10px;
+        padding: 6px 12px;
+    }
+}

@@ -3,7 +3,7 @@ import { GameState, generateRoomCode, calculatePlayerPositions, COLOR_CODES, get
 import PartySocket from 'partysocket';
 
 // Use production PartyKit server
-const PARTYKIT_HOST = 'skull-game-server.kennyphan123.partykit.dev';
+const PARTYKIT_HOST = 'skull.kennyphan123.partykit.dev';
 
 // App State
 const state = {

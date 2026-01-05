@@ -825,7 +825,8 @@ export default class SkullServer {
             passedPlayers: this.gameState.passedPlayers,
             placementRound: this.gameState.placementRound,
             totalCardsOnTable: this.getTotalCardsOnTable(),
-            gameStarted: this.gameState.gameStarted
+            gameStarted: this.gameState.gameStarted,
+            turnDeadline: this.gameState.turnDeadline
         };
     }
 
@@ -862,11 +863,17 @@ export default class SkullServer {
         const duration = this.gameState.turnTimerDuration;
         if (!duration || duration <= 0) {
             this.gameState.turnDeadline = null;
-            return;
         }
 
         // Set deadline
         this.gameState.turnDeadline = Date.now() + (duration * 1000);
+
+        // Broadcast timer update
+        this.broadcast({
+            type: 'timerUpdate',
+            turnDeadline: this.gameState.turnDeadline,
+            currentTurnId: this.gameState.currentTurnId
+        });
 
         // Set timeout
         this.turnTimeout = setTimeout(() => {

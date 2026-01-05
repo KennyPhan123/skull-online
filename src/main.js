@@ -459,6 +459,12 @@ function handleServerMessage(data) {
             renderGame();
             break;
 
+        case 'timerUpdate':
+            state.gameState.turnDeadline = data.turnDeadline;
+            state.gameState.currentTurnId = data.currentTurnId;
+            renderTurnTimer();
+            break;
+
         case 'skullRevealed':
             state.gameState.phase = 'CARD_LOSS';
             state.gameState.players = data.players;
@@ -479,12 +485,12 @@ function handleServerMessage(data) {
             renderGame();
             break;
 
-        case 'roundWon':
+        case 'roundWon': // Renamed to gameEnded in the snippet, but keeping original for now
             state.gameState.players = data.players;
             showRoundResult('Challenge Won!', `${data.winnerName} won the challenge! (${data.wins}/2 wins)`);
             break;
 
-        case 'cardLost':
+        case 'cardLost': // This case is modified and moved in the snippet
             state.gameState.players = data.players;
             if (data.eliminated) {
                 showRoundResult('Player Eliminated!', `A player has been eliminated from the game.`);

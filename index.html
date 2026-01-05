@@ -187,20 +187,29 @@
                 </div>
             </div>
 
-            <!-- Personal History -->
-            <div id="personalHistory" class="personal-history hidden">
-                <span class="history-label">Your Stack:</span>
-                <div id="historyList" class="history-list"></div>
-            </div>
-
-            <!-- Turn Timer -->
-            <div id="turnTimer" class="turn-timer hidden">
-                <span class="timer-label">Time:</span>
-                <span id="timerValue">--</span>
+            <!-- Round Result Modal -->
+            <div id="roundResultModal" class="modal hidden">
+                <div class="modal-content">
+                    <h2 id="roundResultTitle"></h2>
+                    <p id="roundResultMessage"></p>
+                    <button id="continueGame" class="btn btn-primary">Continue</button>
+                </div>
             </div>
         </div>
 
-        <!-- Game Over Modal -->
+        <!-- Personal History (Moved to root) -->
+        <div id="personalHistory" class="personal-history hidden">
+            <span class="history-label">Your Stack:</span>
+            <div id="historyList" class="history-list"></div>
+        </div>
+
+        <!-- Turn Timer (Moved to root) -->
+        <div id="turnTimer" class="turn-timer hidden">
+            <span class="timer-label">Time:</span>
+            <span id="timerValue">--</span>
+        </div>
+
+        <!-- Game Over Modal (Moved to root) -->
         <div id="gameOverModal" class="modal hidden">
             <div class="modal-content">
                 <h2>Game Over!</h2>
@@ -209,26 +218,16 @@
             </div>
         </div>
 
-        <!-- Round Result Modal -->
-        <div id="roundResultModal" class="modal hidden">
-            <div class="modal-content">
-                <h2 id="roundResultTitle"></h2>
-                <p id="roundResultMessage"></p>
-                <button id="continueGame" class="btn btn-primary">Continue</button>
+        <!-- Error Modal (global - works on all screens) -->
+        <div id="errorModal" class="modal hidden">
+            <div class="modal-content error-modal">
+                <h2>⚠️ Error</h2>
+                <p id="errorMessage"></p>
+                <button id="errorOk" class="btn btn-primary">OK</button>
             </div>
         </div>
-    </div>
 
-    <!-- Error Modal (global - works on all screens) -->
-    <div id="errorModal" class="modal hidden">
-        <div class="modal-content error-modal">
-            <h2>⚠️ Error</h2>
-            <p id="errorMessage"></p>
-            <button id="errorOk" class="btn btn-primary">OK</button>
-        </div>
-    </div>
-
-    <script type="module" src="/src/main.js"></script>
+        <script type="module" src="/src/main.js"></script>
 </body>
 
 </html>

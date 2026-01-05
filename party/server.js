@@ -61,7 +61,7 @@ export default class SkullServer {
                     this.handleLeave(sender);
                     break;
                 case 'start':
-                    this.handleStart(sender);
+                    this.handleStart(data, sender);
                     break;
                 case 'placeCard':
                     this.handlePlaceCard(data, sender);
@@ -172,7 +172,7 @@ export default class SkullServer {
         }
     }
 
-    handleStart(sender) {
+    handleStart(data, sender) {
         if (sender.id !== this.gameState.hostId) return;
         if (this.gameState.players.length < 3) {
             sender.send(JSON.stringify({ type: 'error', message: 'Need at least 3 players' }));

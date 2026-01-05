@@ -35,7 +35,9 @@ export default class SkullServer {
             passedPlayers: [], // Players who passed on bidding
             gameStarted: false,
             placementRound: 1, // Track which round of placement (1 = initial, 2+ = adding)
-            cardLossProcessed: false // Prevent spam during card loss
+            cardLossProcessed: false, // Prevent spam during card loss
+            turnTimerDuration: 0,
+            turnDeadline: null
         };
     }
 
@@ -178,6 +180,7 @@ export default class SkullServer {
         }
 
         this.gameState.gameStarted = true;
+        this.gameState.turnTimerDuration = data.timerDuration || 0;
 
         // Random first player
         const activePlayers = this.gameState.players.filter(p => !p.eliminated);
@@ -220,6 +223,7 @@ export default class SkullServer {
         }
 
         this.gameState.currentTurnId = this.gameState.firstPlayerId;
+        this.startTurnTimer();
     }
 
     handlePlaceCard(data, sender) {
@@ -265,9 +269,7 @@ export default class SkullServer {
                 player.hand.length === 0
         });
 
-        // If player has no cards left in hand after placing, they must challenge on their next turn
-        // But only check this during add/challenge phase (round >= 2)
-        // The client will handle forcing the challenge
+        this.startTurnTimer();
     }
 
     handleChallenge(data, sender) {
@@ -320,6 +322,15 @@ export default class SkullServer {
             phase: this.gameState.phase,
             totalCards: totalCards
         });
+
+        // Auto-start revelation if max bid is reached immediately
+        if (bid >= totalCards) {
+            setTimeout(() => {
+                this.startRevelation();
+            }, 1000);
+        } else {
+            this.startTurnTimer();
+        }
     }
 
     handleRaise(data, sender) {
@@ -344,6 +355,19 @@ export default class SkullServer {
         // Check if only one player remains (all others passed)
         if (this.checkBiddingComplete()) {
             this.startRevelation();
+        } else if (newBid >= totalCards) {
+            // Auto-start revelation if max bid is reached
+            this.broadcast({
+                type: 'bidRaised',
+                playerId: sender.id,
+                bid: newBid,
+                currentTurnId: this.gameState.currentTurnId,
+                challengerId: this.gameState.challengerId
+            });
+            // Small delay to let the bid update show before switching phase
+            setTimeout(() => {
+                this.startRevelation();
+            }, 1000);
         } else {
             this.broadcast({
                 type: 'bidRaised',
@@ -352,6 +376,7 @@ export default class SkullServer {
                 currentTurnId: this.gameState.currentTurnId,
                 challengerId: this.gameState.challengerId
             });
+            this.startTurnTimer();
         }
     }
 
@@ -376,6 +401,7 @@ export default class SkullServer {
                 passedPlayers: this.gameState.passedPlayers,
                 currentTurnId: this.gameState.currentTurnId
             });
+            this.startTurnTimer();
         }
     }
 
@@ -821,6 +847,70 @@ export default class SkullServer {
             }
         } else {
             this.room.broadcast(JSON.stringify(message));
+        }
+    }
+
+    // === TIMER ===
+
+    startTurnTimer() {
+        // Clear existing timer
+        if (this.turnTimeout) {
+            clearTimeout(this.turnTimeout);
+            this.turnTimeout = null;
+        }
+
+        const duration = this.gameState.turnTimerDuration;
+        if (!duration || duration <= 0) {
+            this.gameState.turnDeadline = null;
+            return;
+        }
+
+        // Set deadline
+        this.gameState.turnDeadline = Date.now() + (duration * 1000);
+
+        // Set timeout
+        this.turnTimeout = setTimeout(() => {
+            this.handleTurnTimeout();
+        }, duration * 1000);
+    }
+
+    handleTurnTimeout() {
+        const currentTurnId = this.gameState.currentTurnId;
+        const player = this.gameState.players.find(p => p.id === currentTurnId);
+        if (!player || player.eliminated) return;
+
+        console.log(`Time out for player ${player.name} in phase ${this.gameState.phase}`);
+
+        // Auto-action based on phase
+        switch (this.gameState.phase) {
+            case 'PLACEMENT':
+                // If hand not empty, place random card
+                if (player.hand.length > 0) {
+                    const randomCard = player.hand[Math.floor(Math.random() * player.hand.length)];
+                    this.handlePlaceCard({ cardType: randomCard }, { id: player.id });
+                } else {
+                    // Hand empty, must challenge. Challenge with min bid (1 or current+1).
+                    // Auto-bid 1.
+                    this.handleChallenge({ bid: 1 }, { id: player.id });
+                }
+                break;
+
+            case 'CHALLENGE':
+                // Pass
+                this.handlePass({ id: player.id });
+                break;
+
+            case 'CARD_LOSS':
+                // Random loss
+                this.randomCardLoss(player);
+                break;
+
+            case 'CHOOSE_FIRST_PLAYER':
+                // Choose self if possible, or random active player
+                const activePlayers = this.gameState.players.filter(p => !p.eliminated);
+                const randomNext = activePlayers[Math.floor(Math.random() * activePlayers.length)];
+                this.handleChooseFirstPlayer({ playerId: randomNext.id }, { id: player.id });
+                break;
         }
     }
 }

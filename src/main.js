@@ -24,7 +24,13 @@ const state = {
     bidMax: 24,
     challengeBidValue: 1,
     challengeBidMin: 1,
-    challengeBidMax: 24
+    challengeBidValue: 1,
+    challengeBidMin: 1,
+    challengeBidMin: 1,
+    challengeBidMax: 24,
+    myPlacementHistory: [], // Array of 'flower' or 'skull'
+    timerDuration: 0, // 0 = off
+    timerInterval: null
 };
 
 // DOM Elements
@@ -82,6 +88,15 @@ const elements = {
     cardLossActions: document.getElementById('cardLossActions'),
     popupBidDisplay: document.getElementById('popupBidDisplay'),
 
+    // Personal History
+    personalHistory: document.getElementById('personalHistory'),
+    historyList: document.getElementById('historyList'),
+
+    // Timer
+    timerDurationInput: document.getElementById('timerDuration'),
+    turnTimer: document.getElementById('turnTimer'),
+    timerValue: document.getElementById('timerValue'),
+
     // Modals
     gameOverModal: document.getElementById('gameOverModal'),
     gameOverMessage: document.getElementById('gameOverMessage'),
@@ -127,6 +142,8 @@ function setupLobbyHandlers() {
 
     elements.createRoom.addEventListener('click', () => {
         const name = elements.createName.value.trim();
+        const duration = parseInt(elements.timerDurationInput.value, 10);
+
         if (!name) {
             showError('Please enter your name');
             return;
@@ -134,6 +151,7 @@ function setupLobbyHandlers() {
         state.playerName = name;
         state.roomCode = generateRoomCode(4);
         state.isHost = true;
+        state.timerDuration = duration;
         connectToRoom();
     });
 
@@ -156,7 +174,10 @@ function setupLobbyHandlers() {
 
     elements.startGame.addEventListener('click', () => {
         if (state.socket && state.isHost) {
-            state.socket.send(JSON.stringify({ type: 'start' }));
+            state.socket.send(JSON.stringify({
+                type: 'start',
+                timerDuration: state.timerDuration
+            }));
         }
     });
 
@@ -261,6 +282,7 @@ function returnToMainMenu() {
     state.myHand = [];
     state.myStack = [];
     state.myColorCode = null;
+    state.myPlacementHistory = [];
 
     // Hide all forms and show main menu
     elements.roomInfo.classList.add('hidden');
@@ -433,6 +455,7 @@ function handleServerMessage(data) {
         case 'newRound':
             syncGameState(data.state);
             state.cardLossProcessing = false; // Reset spam protection
+            state.myPlacementHistory = []; // Clear history for new round
             hideModals();
             renderGame();
             break;
@@ -507,7 +530,11 @@ function renderGame() {
     renderPlayers();
     renderPlayerHand();
     renderCenterArea();
+    renderCenterArea();
+    renderCenterArea();
     renderActionPanel();
+    renderPersonalHistory();
+    renderTurnTimer();
 }
 
 function renderPlayers() {
@@ -657,6 +684,8 @@ function renderPlayerHand(forceShow = false) {
                 type: 'placeCard',
                 cardType: cardType
             }));
+            // Optimistically add to history
+            state.myPlacementHistory.push(cardType);
         });
 
         handContainer.appendChild(disc);
@@ -1047,3 +1076,41 @@ function showError(message) {
 
 // Start
 init();
+
+function renderPersonalHistory() {
+    const history = state.myPlacementHistory;
+    const historyContainer = elements.personalHistory;
+    const listContainer = elements.historyList;
+
+    // Only show if we have placed cards
+    if (!history || history.length === 0) {
+        historyContainer.classList.add('hidden');
+        return;
+    }
+
+    historyContainer.classList.remove('hidden');
+
+    // Clear current list
+    listContainer.innerHTML = '';
+
+    // Render items (bottom to top)
+    history.forEach((cardType, index) => {
+        const item = document.createElement('div');
+        item.className = 'history-item';
+
+        const text = cardType === 'skull' ? 'Skull' : 'Flower';
+        const typeClass = cardType;
+
+        item.innerHTML = `<span class="history-type ${typeClass}">${text}</span>`;
+
+        if (index < history.length - 1) {
+            const arrow = document.createElement('span');
+            arrow.className = 'history-arrow';
+            arrow.textContent = '→';
+            listContainer.appendChild(item);
+            listContainer.appendChild(arrow);
+        } else {
+            listContainer.appendChild(item);
+        }
+    });
+}

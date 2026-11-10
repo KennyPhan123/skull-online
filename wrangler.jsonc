@@ -1,0 +1,31 @@
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "skull",
+    "main": "party/server.js",
+    "compatibility_date": "2025-12-27",
+    "compatibility_flags": ["nodejs_compat"],
+    "build": {
+        "command": "npm run build",
+        "watch_dir": ["src", "public"]
+    },
+    "durable_objects": {
+        "bindings": [
+            {
+                "name": "Main",
+                "class_name": "SkullServer"
+            }
+        ]
+    },
+    "migrations": [
+        {
+            "tag": "v1",
+            "new_sqlite_classes": ["SkullServer"]
+        }
+    ],
+    "assets": {
+        "directory": "./dist",
+        "binding": "ASSETS",
+        "not_found_handling": "single-page-application",
+        "run_worker_first": ["/parties/*", "/party/*"]
+    }
+}

@@ -2,18 +2,14 @@
 
 A web-based multiplayer implementation of the Skull board game. Play online with 3-6 players.
 
-## Live Demo
-
-Play now at: **https://skull.kennyphan123.partykit.dev**
-
 ## Features
 
 - **Real-time Multiplayer**: Supports 3-6 players seamlessly.
 - **Room System**: Private rooms with 4-letter codes.
-- **Turn Timer**: Configurable turn limits (30s, 60s, etc.) with **Auto-Play** logic for AFK players.
+- **Turn Timer**: Configurable turn limits (15s, 20s, 25s, 30s) with **Auto-Play** logic for AFK players.
     - *Auto-Place/Challenge*: If time runs out during placement.
     - *Auto-Pass*: If time runs out during bidding.
-    - *Auto-Reveal*: If time runs out during revelation.
+    - *Auto-Reveal / Card Loss*: If time runs out during card loss / first player choice.
 - **Personal History**: Track your own placed cards (Skull/Flower) in the bottom-left corner.
 - **Responsive HUD**: Text-only, pastel-themed HUD positioned flush to corners for maximum visibility.
 - **Smart Logic**:
@@ -37,7 +33,7 @@ Play now at: **https://skull.kennyphan123.partykit.dev**
 
 - **Frontend**: Vanilla JavaScript (ES6+), HTML5, CSS3 (Pastel Theme)
 - **Build Tool**: Vite
-- **Backend/Hosting**: PartyKit (WebSocket Serverless)
+- **Backend/Hosting**: Cloudflare Workers + Durable Objects (`partyserver` & `partysocket`)
 
 ## Local Development
 
@@ -52,11 +48,11 @@ Play now at: **https://skull.kennyphan123.partykit.dev**
 # Install dependencies
 npm install
 
-# Run development server
-npm run dev
+# Run Cloudflare Worker + static site locally (http://localhost:8787)
+npm run dev:worker
 
-# Run PartyKit dev server (for multiplayer)
-npx partykit dev
+# (Optional) Run Vite HMR dev server on http://localhost:3000 (proxies /parties to :8787)
+npm run dev
 ```
 
 ### Build
@@ -65,28 +61,34 @@ npx partykit dev
 npm run build
 ```
 
-### Deploy
+### Deploy to Cloudflare Workers
 
 ```bash
-# Deploy to PartyKit (Project name: skull)
-npx partykit deploy
+# Authenticate with Cloudflare (first time only)
+npx wrangler login
+
+# Build frontend and deploy Worker + Durable Objects + Static Assets
+npm run deploy
 ```
+
+> **Note:** By default, the frontend connects to the same origin (`window.location.host`), which works out-of-the-box when deployed together on Cloudflare Workers (`https://skull.<your-subdomain>.workers.dev` or custom domain). If you deploy the frontend separately (e.g. Cloudflare Pages / Vercel), set `VITE_PARTY_HOST=skull.<your-subdomain>.workers.dev` at build time.
 
 ## Project Structure
 
 ```
 skull-online/
 ├── src/
-│   ├── main.js      # Client-side game logic & UI rendering
-│   └── styles.css   # Main stylesheet (Pastel theme, Animations)
+│   ├── game.js       # Game constants, positions & client state class
+│   ├── main.js       # Client-side game logic & UI rendering
+│   └── styles.css    # Main stylesheet (Pastel theme, Animations)
 ├── party/
-│   └── server.js    # PartyKit server (Game state, Timer, Auto-play)
+│   └── server.js     # Cloudflare Worker + PartyServer Durable Object
 ├── public/
-│   ├── coasters/    # Disc images
-│   └── mats/        # Player mat images
-├── index.html       # Entry point
-├── vite.config.js   # Vite config
-└── partykit.json    # PartyKit config (Project: skull)
+│   ├── coasters/     # Disc images
+│   └── mats/         # Player mat images
+├── index.html        # Entry point
+├── vite.config.js    # Vite config
+└── wrangler.jsonc    # Cloudflare Workers & Durable Objects config
 ```
 
 ## License

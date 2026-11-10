@@ -1,6 +1,0 @@
-{
-    "name": "skull",
-    "main": "party/server.js",
-    "compatibilityDate": "2025-12-27",
-    "serve": "./dist"
-}

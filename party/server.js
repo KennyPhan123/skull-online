@@ -1,5 +1,6 @@
-// PartyKit Server for Skull Board Game
+// Cloudflare Workers + PartyServer (Durable Object) for Skull Board Game
 // Handles all game logic and state management
+import { routePartykitRequest, Server } from 'partyserver';
 
 // Color codes c01-c06 for 6 players
 const COLOR_CODES = ['c01', 'c02', 'c03', 'c04', 'c05', 'c06'];
@@ -14,10 +15,15 @@ function shuffleArray(array) {
     return shuffled;
 }
 
-export default class SkullServer {
-    constructor(room) {
-        this.room = room;
+export class SkullServer extends Server {
+    static options = {
+        hibernate: false
+    };
+
+    constructor(ctx, env) {
+        super(ctx, env);
         this.gameState = this.createInitialState();
+        this.turnTimeout = null;
     }
 
     createInitialState() {
@@ -49,9 +55,12 @@ export default class SkullServer {
         }));
     }
 
-    onMessage(message, sender) {
+    onMessage(sender, message) {
         try {
-            const data = JSON.parse(message);
+            const raw = typeof message === 'string'
+                ? message
+                : new TextDecoder().decode(message);
+            const data = JSON.parse(raw);
 
             switch (data.type) {
                 case 'join':
@@ -97,6 +106,11 @@ export default class SkullServer {
     }
 
     onClose(connection) {
+        this.handleLeave(connection);
+    }
+
+    onError(connection, error) {
+        console.error(`Connection error (${connection.id}):`, error);
         this.handleLeave(connection);
     }
 
@@ -412,6 +426,7 @@ export default class SkullServer {
     }
 
     startRevelation() {
+        this.clearTurnTimer();
         this.gameState.phase = 'REVELATION';
         this.gameState.revealedCount = 0;
         this.gameState.revealedSkull = false;
@@ -732,6 +747,8 @@ export default class SkullServer {
     handleReset(sender) {
         if (sender.id !== this.gameState.hostId) return;
 
+        this.clearTurnTimer();
+
         // Reset game state but preserve players
         const existingPlayers = this.gameState.players;
         const hostId = this.gameState.hostId;
@@ -830,11 +847,18 @@ export default class SkullServer {
         };
     }
 
-    broadcast(message) {
+    broadcast(message, without) {
+        if (typeof message === 'string' || message instanceof ArrayBuffer || ArrayBuffer.isView(message)) {
+            super.broadcast(message, without);
+            return;
+        }
+
         // For messages with player data, send personalized state (own cards visible)
         // Check for message.players OR message.state (which contains players)
         if (message.type === 'state' || message.players || message.state) {
-            for (const conn of this.room.getConnections()) {
+            for (const conn of this.getConnections()) {
+                if (without && without.includes(conn.id)) continue;
+
                 const personalizedMessage = { ...message };
 
                 // Find this player's data and include their full hand
@@ -844,25 +868,33 @@ export default class SkullServer {
                     personalizedMessage.myStack = player.stack;
                 }
 
-                conn.send(JSON.stringify(personalizedMessage));
+                try {
+                    conn.send(JSON.stringify(personalizedMessage));
+                } catch {
+                    // Ignore send errors on closing sockets
+                }
             }
         } else {
-            this.room.broadcast(JSON.stringify(message));
+            super.broadcast(JSON.stringify(message), without);
         }
     }
 
     // === TIMER ===
 
-    startTurnTimer() {
-        // Clear existing timer
+    clearTurnTimer() {
         if (this.turnTimeout) {
             clearTimeout(this.turnTimeout);
             this.turnTimeout = null;
         }
+        this.gameState.turnDeadline = null;
+    }
+
+    startTurnTimer() {
+        this.clearTurnTimer();
 
         const duration = this.gameState.turnTimerDuration;
         if (!duration || duration <= 0) {
-            this.gameState.turnDeadline = null;
+            return;
         }
 
         // Set deadline
@@ -921,3 +953,25 @@ export default class SkullServer {
         }
     }
 }
+
+export default {
+    async fetch(request, env) {
+        const url = new URL(request.url);
+        // Support legacy /party/:room URLs by rewriting to /parties/main/:room
+        if (url.pathname.startsWith('/party/')) {
+            url.pathname = url.pathname.replace(/^\/party\//, '/parties/main/');
+            request = new Request(url.toString(), request);
+        }
+
+        const partyResponse = await routePartykitRequest(request, env);
+        if (partyResponse) {
+            return partyResponse;
+        }
+
+        if (env.ASSETS) {
+            return env.ASSETS.fetch(request);
+        }
+
+        return new Response('Not Found', { status: 404 });
+    }
+};

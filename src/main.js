@@ -2,8 +2,9 @@
 import { GameState, generateRoomCode, calculatePlayerPositions, COLOR_CODES, getImagePaths } from './game.js';
 import PartySocket from 'partysocket';
 
-// Use production PartyKit server
-const PARTYKIT_HOST = 'skull.kennyphan123.partykit.dev';
+// Cloudflare Worker host (defaults to current origin when served by Workers/Vite proxy,
+// or override via VITE_PARTY_HOST if frontend is hosted separately)
+const CONFIGURED_PARTY_HOST = import.meta.env.VITE_PARTY_HOST?.trim();
 
 // App State
 const state = {
@@ -220,10 +221,14 @@ function copyRoomCode() {
 }
 
 function connectToRoom() {
-    state.socket = new PartySocket({
-        host: PARTYKIT_HOST,
+    const socketOptions = {
+        host: CONFIGURED_PARTY_HOST || window.location.host,
         room: state.roomCode
-    });
+    };
+    if (!CONFIGURED_PARTY_HOST) {
+        socketOptions.protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    }
+    state.socket = new PartySocket(socketOptions);
 
     state.socket.addEventListener('open', () => {
         state.playerId = state.socket.id;

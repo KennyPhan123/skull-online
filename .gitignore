@@ -23,7 +23,10 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Partykit
+# Cloudflare Wrangler
+.wrangler/
+.dev.vars
+.dev.vars.*
 .partykit/
 
 # Logs
